@@ -1,0 +1,62 @@
+{
+  "prefetchRate": 5,
+  "maxThreads": null,
+  "disableRoutePrefixing": false,
+  "outputFileRate": 100,
+  "extensions": [
+    ".js",
+    ".jsx"
+  ],
+  "minLoadTime": 200,
+  "disablePreload": false,
+  "disableRuntime": false,
+  "preloadPollInterval": 300,
+  "productionSourceMaps": false,
+  "silent": false,
+  "entry": "index.js",
+  "plugins": [
+    [
+      "/mnt/c/Users/Scuba/Sites/barnacle/node_modules/react-static-plugin-source-filesystem/node.api.js",
+      {
+        "location": "/mnt/c/Users/Scuba/Sites/barnacle/src/pages"
+      }
+    ],
+    "/mnt/c/Users/Scuba/Sites/barnacle/node_modules/react-static-plugin-reach-router/browser.api.js",
+    "/mnt/c/Users/Scuba/Sites/barnacle/node_modules/react-static-plugin-sitemap/dist/node.api.js",
+    "/mnt/c/Users/Scuba/Sites/barnacle"
+  ],
+  "paths": {
+    "ROOT": "/mnt/c/Users/Scuba/Sites/barnacle",
+    "SRC": "/mnt/c/Users/Scuba/Sites/barnacle/src",
+    "DIST": "/mnt/c/Users/Scuba/Sites/barnacle/dist",
+    "ASSETS": "/mnt/c/Users/Scuba/Sites/barnacle/dist",
+    "PLUGINS": "/mnt/c/Users/Scuba/Sites/barnacle/plugins",
+    "TEMP": "/mnt/c/Users/Scuba/Sites/barnacle/tmp",
+    "ARTIFACTS": "/mnt/c/Users/Scuba/Sites/barnacle/artifacts",
+    "PUBLIC": "/mnt/c/Users/Scuba/Sites/barnacle/public",
+    "NODE_MODULES": "/mnt/c/Users/Scuba/Sites/barnacle/node_modules",
+    "EXCLUDE_MODULES": "/mnt/c/Users/Scuba/Sites/barnacle/node_modules",
+    "PACKAGE": "/mnt/c/Users/Scuba/Sites/barnacle/package.json",
+    "HTML_TEMPLATE": "/mnt/c/Users/Scuba/Sites/barnacle/dist/index.html",
+    "STATIC_DATA": "/mnt/c/Users/Scuba/Sites/barnacle/dist/staticData"
+  },
+  "siteRoot": "/",
+  "basePath": "",
+  "publicPath": "/",
+  "assetsPath": "",
+  "extractCssChunks": false,
+  "inlineCss": false,
+  "babelExcludes": [],
+  "devServer": {
+    "host": "localhost",
+    "port": 3000
+  },
+  "terser": {
+    "terserOptions": {
+      "mangle": {},
+      "parse": {},
+      "compress": {},
+      "output": {}
+    }
+  }
+}

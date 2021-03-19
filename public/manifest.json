@@ -1,0 +1,27 @@
+{
+  "name": "Commutron Time",
+  "short_name": "Commutron Time",
+  "description": "Sync Timed Notifications",
+  "dir": "ltr",
+  "lang": "English",
+  "start_url": "/",
+  "background_color": "#2f2f2f",
+  "display": "standalone",
+  "orientation": "portrait", 
+  "scope": "/",
+  "theme_color": "#2f2f2f",
+  "icons": [
+    {
+      "src": "/timer-circle-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/timer-circle-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}

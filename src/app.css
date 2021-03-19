@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poiret One', monospace;
+  font-weight: 600;
+  font-size: 16px;
+  color: #E6EBEB;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  min-width: none;
+  overflow: hidden;
+  user-select: none;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+#root > div {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 85%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #2f2f2f;
+  transition-property: background-color;
+  transition-duration: 2s;
+  transition-delay: 0s;
+}
+footer {
+  height: 15%;
+  width: 100%;
+  margin: 0;
+  border: none;
+  padding: 0 3vmin;
+  overflow: hidden;
+  font-size: 5vmin;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2f2f2f;
+  transition-property: background-color;
+  transition-duration: 2s;
+  transition-delay: 0s;
+}
+
+.doAction {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 90%;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  transition: all 100ms ease-out 75ms;
+}
+.doAction svg {
+  height: 100%;
+  color: #E6EBEB;
+  fill: #E6EBEB;
+}
+
+.timeNumbers {
+  width: 100%;
+  font-size: 30vmin;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  word-break: keep-all;
+  word-wrap: normal;
+  line-height: 1;
+  text-align: center;
+}
+.bigger {
+  font-size: 40vmin;
+}
+
+.lightup {
+  background-color: #028090;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.messageBox {
+  font-size: 7vmin;
+  height: 10vmin;
+  line-height: 1;
+  color: #F2545B;
+  color: #028090;
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 1s linear 1;
+}
