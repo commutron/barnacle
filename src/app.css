@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 body {
   font-family: 'Poiret One', monospace;
   font-weight: 600;
@@ -13,6 +18,7 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  background-color: #2f2f2f;
   min-width: none;
   overflow: hidden;
   user-select: none;
@@ -40,6 +46,7 @@ main {
   transition-property: background-color;
   transition-duration: 2s;
   transition-delay: 0s;
+  animation: fadeIn 1s linear 1;
 }
 footer {
   height: 15%;
@@ -57,6 +64,7 @@ footer {
   transition-property: background-color;
   transition-duration: 2s;
   transition-delay: 0s;
+  animation: fadeIn 1s linear 1;
 }
 
 .doAction {
@@ -95,10 +103,6 @@ footer {
   background-color: #028090;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
 .messageBox {
   font-size: 7vmin;
   height: 10vmin;

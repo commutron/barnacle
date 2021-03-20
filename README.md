@@ -1,6 +1,14 @@
 # barnacle
 
-An alarm clock utility. Syncs time to the host server and shows notifications on a recurring schedule of times.
+An alarm clock utility. Syncs time the host server and shows notifications on a recurring schedule of times.
+
+The goal is to get every client to share the same time even if the desktop time is inccorrect.
+
+The time is not accurate to the millisecond as it is not compensating for the API call delay.
+Even on a poor connection the round trip is negligible so more accuracy is not deemed worth while at this time.
+
+If the server API is unavailable, it will continue to work but off of the local computer time.
+
 
 config.json
 
@@ -30,7 +38,7 @@ config.json
   "sync" : 3600000, (1 hour)
 
   // How soon to show the next Alarm in minutes
-  "prewarn" : 60,
+  "prewarn" : 5,
 
   // How long to show the alarm indicator in minutes
   "lightup" : 1

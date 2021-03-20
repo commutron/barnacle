@@ -123,22 +123,16 @@ module.exports = require("react");
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"twentyfour\":false,\"noise\":false,\"week\":{\"0\":[],\"1\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"2\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"3\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"4\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"5\":[\"09:15\",\"12:00\"],\"6\":[]},\"sync\":3600000,\"prewarn\":60,\"lightup\":1}");
+module.exports = JSON.parse("{\"twentyfour\":false,\"noise\":false,\"week\":{\"0\":[],\"1\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"2\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"3\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"4\":[\"09:15\",\"11:45\",\"14:15\",\"16:30\"],\"5\":[\"09:15\",\"12:00\"],\"6\":[]},\"sync\":3600000,\"prewarn\":5,\"lightup\":1}");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("@babel/runtime/regenerator");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
 module.exports = require("@babel/runtime/helpers/slicedToArray");
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -148,7 +142,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _utils = __webpack_require__(10);
+var _utils = __webpack_require__(8);
 
 var requireById = function requireById(id) {
   if (!(0, _utils.isWebpack)() && typeof id === 'string') {
@@ -161,25 +155,19 @@ var requireById = function requireById(id) {
 exports["default"] = requireById;
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/helpers/asyncToGenerator");
-
-/***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-static");
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(9);
+var _typeof = __webpack_require__(7);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -247,21 +235,21 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(13);
+var _propTypes = __webpack_require__(12);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _hoistNonReactStatics = __webpack_require__(15);
+var _hoistNonReactStatics = __webpack_require__(14);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
 var _requireUniversalModule2 = _interopRequireDefault(_requireUniversalModule);
 
-var _context = __webpack_require__(14);
+var _context = __webpack_require__(13);
 
 var _context2 = _interopRequireDefault(_context);
 
-var _utils = __webpack_require__(10);
+var _utils = __webpack_require__(8);
 
 var _helpers = __webpack_require__(33);
 
@@ -650,7 +638,7 @@ function universal(asyncModule) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(29)(module)))
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -663,18 +651,72 @@ var external_react_ = __webpack_require__(0);
 var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
 
 // EXTERNAL MODULE: external "react-static"
-var external_react_static_ = __webpack_require__(6);
+var external_react_static_ = __webpack_require__(4);
 
 // EXTERNAL MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/app.css
 var app = __webpack_require__(41);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/slicedToArray"
-var slicedToArray_ = __webpack_require__(3);
+var slicedToArray_ = __webpack_require__(2);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray_);
 
 // EXTERNAL MODULE: /mnt/c/Users/Scuba/Sites/barnacle/public/config.json
 var config = __webpack_require__(1);
 
+// EXTERNAL MODULE: external "@babel/runtime/helpers/asyncToGenerator"
+var asyncToGenerator_ = __webpack_require__(22);
+var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator_);
+
+// EXTERNAL MODULE: external "@babel/runtime/regenerator"
+var regenerator_ = __webpack_require__(10);
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator_);
+
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/scripts/timeSync.js
+
+
+function getTimeOffset(_x, _x2) {
+  return _getTimeOffset.apply(this, arguments);
+}
+
+function _getTimeOffset() {
+  _getTimeOffset = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(mounted, offsetSet) {
+    return regenerator_default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            fetch('https://commutron-time.netlify.app/.netlify/functions/server-time').then(function (response) {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              } else {
+                return response.json();
+              }
+            }).then(function (datetime) {
+              var syncDate = new Date(datetime.server_time);
+              var clientDate = new Date();
+              var offset = syncDate - clientDate; // console.log('synced');
+
+              if (mounted.current === true) {
+                offsetSet(offset);
+              }
+            });
+            _context.next = 7;
+            break;
+
+          case 4:
+            _context.prev = 4;
+            _context.t0 = _context["catch"](0);
+            throw new Error('Function was not ok');
+
+          case 7:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 4]]);
+  }));
+  return _getTimeOffset.apply(this, arguments);
+}
 // CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/scripts/niceTime.js
 
 function niceTime(hr, min) {
@@ -697,191 +739,6 @@ function niceTime(hr, min) {
 
     return _timeStr;
   }
-}
-// EXTERNAL MODULE: external "@babel/runtime/helpers/asyncToGenerator"
-var asyncToGenerator_ = __webpack_require__(5);
-var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator_);
-
-// EXTERNAL MODULE: external "@babel/runtime/regenerator"
-var regenerator_ = __webpack_require__(2);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator_);
-
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/scripts/serverDate.js
-
-
-
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-// Copyright 2012 David Braun, Github NodeGuy/server-date v4.0.3, www.nodeguy.com/serverdate/
-var fetchSampleImplementation = /*#__PURE__*/function () {
-  var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var requestDate, _yield$fetch, headers, ok, statusText;
-
-    return regenerator_default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            requestDate = new Date();
-            _context.next = 3;
-            return fetch(window.location, {
-              cache: "no-store",
-              method: "HEAD"
-            });
-
-          case 3:
-            _yield$fetch = _context.sent;
-            headers = _yield$fetch.headers;
-            ok = _yield$fetch.ok;
-            statusText = _yield$fetch.statusText;
-
-            if (ok) {
-              _context.next = 9;
-              break;
-            }
-
-            throw new Error("Bad date sample from server: ".concat(statusText));
-
-          case 9:
-            return _context.abrupt("return", {
-              requestDate: requestDate,
-              responseDate: new Date(),
-              serverDate: new Date(headers.get("Date"))
-            });
-
-          case 10:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function fetchSampleImplementation() {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var getServerDate = /*#__PURE__*/function () {
-  var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2() {
-    var _ref3,
-        fetchSample,
-        best,
-        index,
-        _yield$fetchSample,
-        requestDate,
-        responseDate,
-        serverDate,
-        uncertainty,
-        date,
-        _args2 = arguments;
-
-    return regenerator_default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _ref3 = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {
-              fetchSample: fetchSampleImplementation
-            }, fetchSample = _ref3.fetchSample;
-            best = {
-              uncertainty: Number.MAX_VALUE
-            }; // Fetch 10 samples to increase the chance of getting one with low
-            // uncertainty.
-
-            index = 0;
-
-          case 3:
-            if (!(index < 10)) {
-              _context2.next = 21;
-              break;
-            }
-
-            _context2.prev = 4;
-            _context2.next = 7;
-            return fetchSample();
-
-          case 7:
-            _yield$fetchSample = _context2.sent;
-            requestDate = _yield$fetchSample.requestDate;
-            responseDate = _yield$fetchSample.responseDate;
-            serverDate = _yield$fetchSample.serverDate;
-            // We don't get milliseconds back from the Date header so there's
-            // uncertainty of at least half a second in either direction.
-            uncertainty = (responseDate - requestDate) / 2 + 500;
-
-            if (uncertainty < best.uncertainty) {
-              date = new Date(serverDate.getTime() + 500);
-              best = {
-                date: date,
-                offset: date - responseDate,
-                uncertainty: uncertainty
-              };
-            }
-
-            _context2.next = 18;
-            break;
-
-          case 15:
-            _context2.prev = 15;
-            _context2.t0 = _context2["catch"](4);
-            console.warn(_context2.t0);
-
-          case 18:
-            index++;
-            _context2.next = 3;
-            break;
-
-          case 21:
-            return _context2.abrupt("return", best);
-
-          case 22:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, null, [[4, 15]]);
-  }));
-
-  return function getServerDate() {
-    return _ref2.apply(this, arguments);
-  };
-}();
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/scripts/timeSync.js
-
-
-
-function getTimeOffset(_x, _x2) {
-  return _getTimeOffset.apply(this, arguments);
-}
-
-function _getTimeOffset() {
-  _getTimeOffset = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(mounted, offsetSet) {
-    var sample;
-    return regenerator_default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (!(mounted.current === true)) {
-              _context.next = 6;
-              break;
-            }
-
-            _context.next = 3;
-            return getServerDate();
-
-          case 3:
-            sample = _context.sent;
-            console.log('sampled server time: ' + sample.offset);
-            offsetSet(sample.offset);
-
-          case 6:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _getTimeOffset.apply(this, arguments);
 }
 // CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/scripts/fireAlarms.js
 function fireWarn(noiseState) {
@@ -962,6 +819,34 @@ var theButton_Button = function Button(_ref) {
 };
 
 /* harmony default export */ var theButton = (theButton_Button);
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/components/theLayout.jsx
+
+
+
+
+var theLayout_TheLayout = function TheLayout(_ref) {
+  var nowState = _ref.nowState,
+      warnState = _ref.warnState,
+      noiseState = _ref.noiseState,
+      noiseSet = _ref.noiseSet,
+      acHr = _ref.acHr,
+      acMn = _ref.acMn;
+  return /*#__PURE__*/external_react_default.a.createElement(external_react_["Fragment"], null, /*#__PURE__*/external_react_default.a.createElement("main", {
+    className: nowState ? 'lightup' : ''
+  }, /*#__PURE__*/external_react_default.a.createElement(theTime, {
+    hours: acHr,
+    minutes: acMn
+  }), /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "messageBox"
+  }, warnState ? "Next Break @ ".concat(warnState) : null)), /*#__PURE__*/external_react_default.a.createElement("footer", {
+    className: nowState ? 'lightup' : ''
+  }, /*#__PURE__*/external_react_default.a.createElement(theButton, {
+    stateThing: noiseState,
+    setThing: noiseSet
+  }), /*#__PURE__*/external_react_default.a.createElement("span", null, "Commutron Industries Ltd.")));
+};
+
+/* harmony default export */ var theLayout = (theLayout_TheLayout);
 // CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/components/theState.jsx
 
 
@@ -978,23 +863,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-
-
-var theState_TheState = function TheState() {
-  var mounted = Object(external_react_["useRef"])(true);
-  Object(external_react_["useEffect"])(function () {
-    return function () {
-      mounted.current = false;
-    };
-  }, []);
-
-  if (typeof window !== "undefined") {
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission();
-    }
-  }
+var theState_TheState = function TheState(_ref) {
+  var offset = _ref.offset,
+      mounted = _ref.mounted;
 
   var _useState = Object(external_react_["useState"])(config.noise),
       _useState2 = slicedToArray_default()(_useState, 2),
@@ -1011,55 +882,42 @@ var theState_TheState = function TheState() {
       nowState = _useState6[0],
       nowSet = _useState6[1];
 
-  var _useState7 = Object(external_react_["useState"])(false),
+  var _useState7 = Object(external_react_["useState"])(new Date()),
       _useState8 = slicedToArray_default()(_useState7, 2),
-      offset = _useState8[0],
-      offsetSet = _useState8[1];
+      acDate = _useState8[0],
+      setDate = _useState8[1];
 
-  var _useState9 = Object(external_react_["useState"])(new Date()),
+  var _useState9 = Object(external_react_["useState"])(new Date().getHours()),
       _useState10 = slicedToArray_default()(_useState9, 2),
-      acDate = _useState10[0],
-      setDate = _useState10[1];
+      acHr = _useState10[0],
+      setHr = _useState10[1];
 
-  var _useState11 = Object(external_react_["useState"])(new Date().getHours()),
+  var _useState11 = Object(external_react_["useState"])(new Date().getMinutes()),
       _useState12 = slicedToArray_default()(_useState11, 2),
-      acHr = _useState12[0],
-      setHr = _useState12[1];
-
-  var _useState13 = Object(external_react_["useState"])(new Date().getMinutes()),
-      _useState14 = slicedToArray_default()(_useState13, 2),
-      acMn = _useState14[0],
-      setMn = _useState14[1];
+      acMn = _useState12[0],
+      setMn = _useState12[1];
 
   var updateClocks = function updateClocks() {
-    if (offset !== false) {
-      var serverDate = new Date(Date.now() + offset);
+    // console.log(offset); 
+    var serverDate = new Date(Date.now() + offset);
 
-      if (mounted.current === true) {
-        setDate(serverDate);
-        setHr(serverDate.getHours());
-        setMn(serverDate.getMinutes());
-      }
+    if (mounted.current === true) {
+      setDate(serverDate);
+      setHr(serverDate.getHours());
+      setMn(serverDate.getMinutes());
     }
   };
 
   Object(external_react_["useEffect"])(function () {
-    getTimeOffset(mounted, offsetSet);
-    setInterval(function () {
-      return getTimeOffset(mounted, offsetSet);
-    }, config.sync);
-    return function () {
-      clearInterval(getTimeOffset);
-    };
-  }, []);
-  Object(external_react_["useEffect"])(function () {
+    clearInterval(tick);
     updateClocks();
-    setInterval(updateClocks, 1000);
+    var tick = setInterval(updateClocks, 1000);
     return function () {
-      clearInterval(updateClocks);
+      clearInterval(tick);
     };
   }, [offset]);
   Object(external_react_["useEffect"])(function () {
+    // console.log('minute update');
     var todaysAlarms = config.week[acDate.getDay()];
 
     var _iterator = _createForOfIteratorHelper(todaysAlarms),
@@ -1113,22 +971,67 @@ var theState_TheState = function TheState() {
       _iterator.f();
     }
   }, [acMn]);
-  return /*#__PURE__*/external_react_default.a.createElement(external_react_["Fragment"], null, /*#__PURE__*/external_react_default.a.createElement("main", {
-    className: nowState ? 'lightup' : ''
-  }, /*#__PURE__*/external_react_default.a.createElement(theTime, {
-    hours: acHr,
-    minutes: acMn
-  }), /*#__PURE__*/external_react_default.a.createElement("div", {
-    className: "messageBox"
-  }, warnState ? "Next Break @ ".concat(warnState) : null)), /*#__PURE__*/external_react_default.a.createElement("footer", {
-    className: nowState ? 'lightup' : ''
-  }, /*#__PURE__*/external_react_default.a.createElement(theButton, {
-    stateThing: noiseState,
-    setThing: noiseSet
-  }), /*#__PURE__*/external_react_default.a.createElement("span", null, "Commutron Industries Ltd.")));
+  return /*#__PURE__*/external_react_default.a.createElement(theLayout, {
+    nowState: nowState,
+    warnState: warnState,
+    noiseState: noiseState,
+    noiseSet: noiseSet,
+    acHr: acHr,
+    acMn: acMn
+  });
 };
 
 /* harmony default export */ var theState = (theState_TheState);
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/components/theFetch.jsx
+
+
+
+
+
+
+var theFetch_TheFetch = function TheFetch() {
+  if (typeof window !== "undefined") {
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission();
+    }
+  }
+
+  var mounted = Object(external_react_["useRef"])(true);
+  Object(external_react_["useEffect"])(function () {
+    return function () {
+      mounted.current = false;
+    };
+  }, []);
+
+  var _useState = Object(external_react_["useState"])(0),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      offset = _useState2[0],
+      offsetSet = _useState2[1];
+
+  Object(external_react_["useEffect"])(function () {
+    // console.log('get offset');
+    getTimeOffset(mounted, offsetSet);
+    var sync = setInterval(function () {
+      return getTimeOffset(mounted, offsetSet);
+    }, config.sync);
+    return function () {
+      clearInterval(sync);
+    };
+  }, []);
+
+  if (offset !== false) {
+    return /*#__PURE__*/external_react_default.a.createElement(theState, {
+      offset: offset,
+      mounted: mounted
+    });
+  }
+
+  return null;
+};
+
+/* harmony default export */ var theFetch = (theFetch_TheFetch);
 // CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/barnacle/src/App.js
 
 
@@ -1167,23 +1070,23 @@ function App() {
     rel: "mask-icon",
     href: "/timer-circle.svg",
     color: "white"
-  })), /*#__PURE__*/external_react_default.a.createElement(theState, null));
+  })), /*#__PURE__*/external_react_default.a.createElement(theFetch, null));
 }
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("@babel/runtime/helpers/typeof");
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof2 = __webpack_require__(9);
+var _typeof2 = __webpack_require__(7);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1214,7 +1117,7 @@ var _react = __webpack_require__(0);
 
 var React = _interopRequireWildcard(_react);
 
-var _requireById = __webpack_require__(4);
+var _requireById = __webpack_require__(3);
 
 var _requireById2 = _interopRequireDefault(_requireById);
 
@@ -1343,25 +1246,31 @@ var cacheProm = exports.cacheProm = function cacheProm(pr, chunkName, props, pro
 };
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom");
 
 /***/ }),
-/* 12 */
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/regenerator");
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("/mnt/c/Users/Scuba/Sites/barnacle/node_modules/react-static/lib/browser");
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = require("prop-types");
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1388,25 +1297,25 @@ var ReportContext = _react2["default"].createContext({
 exports["default"] = ReportContext;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = require("hoist-non-react-statics");
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("@babel/runtime/helpers/interopRequireDefault");
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = require("@babel/runtime/helpers/interopRequireWildcard");
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1419,7 +1328,7 @@ __webpack_require__.r(__webpack_exports__);
 });
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1432,7 +1341,7 @@ exports["default"] = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _reactStatic = __webpack_require__(6);
+var _reactStatic = __webpack_require__(4);
 
 var _router = __webpack_require__(26);
 
@@ -1549,22 +1458,28 @@ var _default = function _default(_ref) {
 exports["default"] = _default;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-plugin-universal-import/universalImport");
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-hot-loader");
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/helpers/asyncToGenerator");
 
 /***/ }),
 /* 23 */
@@ -1585,7 +1500,7 @@ module.exports = __webpack_require__(34);
 
 var plugins = __webpack_require__(25)["default"];
 
-var _require = __webpack_require__(12),
+var _require = __webpack_require__(11),
     registerPlugins = _require.registerPlugins;
 
 registerPlugins(plugins);
@@ -1598,7 +1513,7 @@ if (false) {}
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _react_static_root_node_modules_react_static_plugin_reach_router_browser_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
+/* harmony import */ var _react_static_root_node_modules_react_static_plugin_reach_router_browser_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
 /* harmony import */ var _react_static_root_node_modules_react_static_plugin_reach_router_browser_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_react_static_root_node_modules_react_static_plugin_reach_router_browser_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
  // Plugins
@@ -1637,7 +1552,7 @@ module.exports = require("@reach/router");
 
 /* eslint-disable import/no-dynamic-require */
 
-var _require = __webpack_require__(12),
+var _require = __webpack_require__(11),
     registerTemplates = _require.registerTemplates;
 
 var _require2 = __webpack_require__(28),
@@ -1655,13 +1570,13 @@ if (false) {}
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "notFoundTemplate", function() { return notFoundTemplate; });
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var babel_plugin_universal_import_universalImport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var babel_plugin_universal_import_universalImport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
 /* harmony import */ var babel_plugin_universal_import_universalImport__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(babel_plugin_universal_import_universalImport__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_universal_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7);
+/* harmony import */ var react_universal_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
 /* harmony import */ var react_universal_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_universal_component__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -1681,7 +1596,7 @@ var universalOptions = {
 var t_0 = react_universal_component__WEBPACK_IMPORTED_MODULE_3___default()(babel_plugin_universal_import_universalImport__WEBPACK_IMPORTED_MODULE_1___default()({
   id: "__react_static_root__/src/pages/404.js",
   load: function load() {
-    return Promise.all([Promise.resolve(/* import() | __react_static_root__/src/pages/404 */).then(__webpack_require__.bind(null, 18))]).then(function (proms) {
+    return Promise.all([Promise.resolve(/* import() | __react_static_root__/src/pages/404 */).then(__webpack_require__.bind(null, 17))]).then(function (proms) {
       return proms[0];
     });
   },
@@ -1689,7 +1604,7 @@ var t_0 = react_universal_component__WEBPACK_IMPORTED_MODULE_3___default()(babel
     return path__WEBPACK_IMPORTED_MODULE_0___default.a.join(__dirname, '__react_static_root__/src/pages/404.js');
   },
   resolve: function resolve() {
-    return /*require.resolve*/(18);
+    return /*require.resolve*/(17);
   },
   chunkName: function chunkName() {
     return "__react_static_root__/src/pages/404";
@@ -1761,7 +1676,7 @@ var _extends = Object.assign || function (target) {
 
 exports["default"] = requireUniversalModule;
 
-var _utils = __webpack_require__(10);
+var _utils = __webpack_require__(8);
 
 var CHUNK_NAMES = exports.CHUNK_NAMES = new Set();
 var MODULE_IDS = exports.MODULE_IDS = new Set();
@@ -1949,10 +1864,10 @@ var getConfig = function getConfig(isDynamic, universalConfig, options, props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	".": 4,
-	"./": 4,
-	"./index": 4,
-	"./index.js": 4
+	".": 3,
+	"./": 3,
+	"./index": 3,
+	"./index.js": 3
 };
 
 
@@ -1982,7 +1897,7 @@ webpackContext.id = 31;
 "use strict";
 
 
-var _typeof = __webpack_require__(9);
+var _typeof = __webpack_require__(7);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -2010,11 +1925,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(13);
+var _propTypes = __webpack_require__(12);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _context = __webpack_require__(14);
+var _context = __webpack_require__(13);
 
 var _context2 = _interopRequireDefault(_context);
 
@@ -2097,11 +2012,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.__handleAfter = exports.__update = undefined;
 
-var _hoistNonReactStatics = __webpack_require__(15);
+var _hoistNonReactStatics = __webpack_require__(14);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _index = __webpack_require__(7);
+var _index = __webpack_require__(5);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -2159,9 +2074,9 @@ var __handleAfter = exports.__handleAfter = function __handleAfter(props, state,
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(16);
+var _interopRequireDefault = __webpack_require__(15);
 
-var _interopRequireWildcard = __webpack_require__(17);
+var _interopRequireWildcard = __webpack_require__(16);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -2208,9 +2123,9 @@ module.exports = require("/mnt/c/Users/Scuba/Sites/barnacle/node_modules/react-s
 "use strict";
 
 
-var _interopRequireWildcard = __webpack_require__(17);
+var _interopRequireWildcard = __webpack_require__(16);
 
-var _interopRequireDefault = __webpack_require__(16);
+var _interopRequireDefault = __webpack_require__(15);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -2259,11 +2174,11 @@ module.exports = require("@babel/runtime/helpers/objectWithoutProperties");
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_hot_loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+/* harmony import */ var react_hot_loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
 /* harmony import */ var react_hot_loader__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_hot_loader__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
 
 
  // Your top level component
@@ -2330,7 +2245,7 @@ exports = module.exports = __webpack_require__(42)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Poiret+One&display=swap);", ""]);
 
 // Module
-exports.push([module.i, "* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  font-family: 'Poiret One', monospace;\r\n  font-weight: 600;\r\n  font-size: 16px;\r\n  color: #E6EBEB;\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  min-width: none;\r\n  overflow: hidden;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\n\r\n#root {\r\n  height: 100vh;\r\n  width: 100vw;\r\n}\r\n#root > div {\r\n  height: 100%;\r\n  width: 100%;\r\n}\r\n\r\nmain {\r\n  height: 85%;\r\n  width: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n  display: flex;\r\n  flex-flow: column nowrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n  background-color: #2f2f2f;\r\n  transition-property: background-color;\r\n  transition-duration: 2s;\r\n  transition-delay: 0s;\r\n}\r\nfooter {\r\n  height: 15%;\r\n  width: 100%;\r\n  margin: 0;\r\n  border: none;\r\n  padding: 0 3vmin;\r\n  overflow: hidden;\r\n  font-size: 5vmin;\r\n  text-align: right;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #2f2f2f;\r\n  transition-property: background-color;\r\n  transition-duration: 2s;\r\n  transition-delay: 0s;\r\n}\r\n\r\n.doAction {\r\n  cursor: pointer;\r\n  display: flex;\r\n  align-items: center;\r\n  height: 90%;\r\n  background-color: transparent;\r\n  border: none;\r\n  border-radius: 0;\r\n  transition: all 100ms ease-out 75ms;\r\n}\r\n.doAction svg {\r\n  height: 100%;\r\n  color: #E6EBEB;\r\n  fill: #E6EBEB;\r\n}\r\n\r\n.timeNumbers {\r\n  width: 100%;\r\n  font-size: 30vmin;\r\n  display: flex;\r\n  flex-flow: row nowrap;\r\n  align-items: center;\r\n  justify-content: center;\r\n  word-break: keep-all;\r\n  word-wrap: normal;\r\n  line-height: 1;\r\n  text-align: center;\r\n}\r\n.bigger {\r\n  font-size: 40vmin;\r\n}\r\n\r\n.lightup {\r\n  background-color: #028090;\r\n}\r\n\r\n@-webkit-keyframes fadeIn {\r\n  0% { opacity: 0; }\r\n  100% { opacity: 1; }\r\n}\r\n\r\n@keyframes fadeIn {\r\n  0% { opacity: 0; }\r\n  100% { opacity: 1; }\r\n}\r\n.messageBox {\r\n  font-size: 7vmin;\r\n  height: 10vmin;\r\n  line-height: 1;\r\n  color: #F2545B;\r\n  color: #028090;\r\n  display: flex;\r\n  align-items: flex-end;\r\n  -webkit-animation: fadeIn 1s linear 1;\r\n          animation: fadeIn 1s linear 1;\r\n}", ""]);
+exports.push([module.i, "* {\r\n  box-sizing: border-box;\r\n}\r\n\r\n@-webkit-keyframes fadeIn {\r\n  0% { opacity: 0; }\r\n  100% { opacity: 1; }\r\n}\r\n\r\n@keyframes fadeIn {\r\n  0% { opacity: 0; }\r\n  100% { opacity: 1; }\r\n}\r\n\r\nbody {\r\n  font-family: 'Poiret One', monospace;\r\n  font-weight: 600;\r\n  font-size: 16px;\r\n  color: #E6EBEB;\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: #2f2f2f;\r\n  min-width: none;\r\n  overflow: hidden;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\n\r\n#root {\r\n  height: 100vh;\r\n  width: 100vw;\r\n}\r\n#root > div {\r\n  height: 100%;\r\n  width: 100%;\r\n}\r\n\r\nmain {\r\n  height: 85%;\r\n  width: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n  display: flex;\r\n  flex-flow: column nowrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n  background-color: #2f2f2f;\r\n  transition-property: background-color;\r\n  transition-duration: 2s;\r\n  transition-delay: 0s;\r\n  -webkit-animation: fadeIn 1s linear 1;\r\n          animation: fadeIn 1s linear 1;\r\n}\r\nfooter {\r\n  height: 15%;\r\n  width: 100%;\r\n  margin: 0;\r\n  border: none;\r\n  padding: 0 3vmin;\r\n  overflow: hidden;\r\n  font-size: 5vmin;\r\n  text-align: right;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #2f2f2f;\r\n  transition-property: background-color;\r\n  transition-duration: 2s;\r\n  transition-delay: 0s;\r\n  -webkit-animation: fadeIn 1s linear 1;\r\n          animation: fadeIn 1s linear 1;\r\n}\r\n\r\n.doAction {\r\n  cursor: pointer;\r\n  display: flex;\r\n  align-items: center;\r\n  height: 90%;\r\n  background-color: transparent;\r\n  border: none;\r\n  border-radius: 0;\r\n  transition: all 100ms ease-out 75ms;\r\n}\r\n.doAction svg {\r\n  height: 100%;\r\n  color: #E6EBEB;\r\n  fill: #E6EBEB;\r\n}\r\n\r\n.timeNumbers {\r\n  width: 100%;\r\n  font-size: 30vmin;\r\n  display: flex;\r\n  flex-flow: row nowrap;\r\n  align-items: center;\r\n  justify-content: center;\r\n  word-break: keep-all;\r\n  word-wrap: normal;\r\n  line-height: 1;\r\n  text-align: center;\r\n}\r\n.bigger {\r\n  font-size: 40vmin;\r\n}\r\n\r\n.lightup {\r\n  background-color: #028090;\r\n}\r\n\r\n.messageBox {\r\n  font-size: 7vmin;\r\n  height: 10vmin;\r\n  line-height: 1;\r\n  color: #F2545B;\r\n  color: #028090;\r\n  display: flex;\r\n  align-items: flex-end;\r\n  -webkit-animation: fadeIn 1s linear 1;\r\n          animation: fadeIn 1s linear 1;\r\n}", ""]);
 
 
 

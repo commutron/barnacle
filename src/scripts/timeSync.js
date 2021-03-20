@@ -1,11 +1,28 @@
-import { getServerDate } from "./serverDate.js";
-
 export async function getTimeOffset(mounted, offsetSet) {
-  if(mounted.current === true) {
-    let sample = await getServerDate();
 
-    console.log('sampled server time: ' + sample.offset);
-    
-    offsetSet(sample.offset);
+  try {
+    fetch('https://commutron-time.netlify.app/.netlify/functions/server-time')
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('Network response was not ok');
+        }else{
+          return response.json();
+        }
+      })
+      .then(datetime => {
+        const syncDate = new Date( datetime.server_time );
+
+        const clientDate = new Date();
+
+        const offset = syncDate - clientDate;
+        
+        // console.log('synced');
+        if(mounted.current === true) {
+          offsetSet(offset);
+        }
+      });
+  }
+  catch{
+    throw new Error('Function was not ok');
   }
 }

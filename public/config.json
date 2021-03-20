@@ -11,6 +11,6 @@
       "6": []
     },
   "sync" : 3600000,
-  "prewarn" : 60,
+  "prewarn" : 5,
   "lightup" : 1
 }

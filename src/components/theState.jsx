@@ -1,65 +1,51 @@
-import React, { useRef, useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 // import Config from '../../public/config.js';
 import Config from '../../public/config.json';
 
 import { niceTime } from '../scripts/niceTime';
-import { getTimeOffset } from '../scripts/timeSync';
+
 
 import { fireWarn, fireAlarm } from '../scripts/fireAlarms';
-import Time from './theTime';
-import Button from './theButton';
+import TheLayout from './theLayout';
 
-const TheState = ()=> {
 
-  const mounted = useRef(true);
-
-  useEffect(() => { return () => { mounted.current = false; }; }, []);
+const TheState = ({ offset, mounted })=> {
   
-  if( typeof window !== "undefined" ) {
-    if(!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    }else if (Notification.permission !== "denied") {
-      Notification.requestPermission();
-    }
-  }
-
   const [ noiseState, noiseSet ] = useState( Config.noise );
  
   const [ warnState, warnSet ] = useState( false );
   const [ nowState, nowSet ] = useState( false );
 
-  const [ offset, offsetSet ] = useState( false );
-
   const [ acDate, setDate ] = useState( new Date() );
   const [ acHr, setHr ] = useState( new Date().getHours() );
   const [ acMn, setMn ] = useState( new Date().getMinutes() );
  
-  const updateClocks = () => {    
-    if(offset !== false) {
-      const serverDate = new Date(Date.now() + offset);
+  const updateClocks = () => {  
+    // console.log(offset); 
 
-      if(mounted.current === true) {
-        setDate( serverDate );
-        setHr( serverDate.getHours() );
-        setMn( serverDate.getMinutes() );
-      }
+    const serverDate = new Date(Date.now() + offset);
+
+    if(mounted.current === true) {
+      setDate( serverDate );
+      setHr( serverDate.getHours() );
+      setMn( serverDate.getMinutes() );
     }
   };
 
   useEffect(() => {
-    getTimeOffset(mounted, offsetSet);
-    setInterval(()=>getTimeOffset(mounted, offsetSet), Config.sync);
-    return ()=> { clearInterval(getTimeOffset); }
-  }, []);
-
-  useEffect(() => {
+    clearInterval(tick);
+    
     updateClocks();
-    setInterval(updateClocks, 1000);
+    const tick = setInterval(updateClocks, 1000);
 
-    return ()=> { clearInterval(updateClocks); }
+    return ()=> { clearInterval(tick); }
   }, [offset]);
 
+
   useEffect( ()=>{
+
+    // console.log('minute update');
+
     const todaysAlarms = Config.week[acDate.getDay()];
 
     for( let alarm of todaysAlarms ) {
@@ -105,24 +91,14 @@ const TheState = ()=> {
   
   
   return(
-    <Fragment>
-      <main className={nowState ? 'lightup' : ''}>
-        <Time
-          hours={acHr}
-          minutes={acMn}
-        />
-        <div className='messageBox'>
-          {warnState ? `Next Break @ ${warnState}` : null}
-        </div>
-      </main> 
-      <footer className={nowState ? 'lightup' : ''}>
-        <Button
-          stateThing={noiseState}
-          setThing={noiseSet} 
-        />
-        <span>Commutron Industries Ltd.</span>
-      </footer>
-    </Fragment>
+    <TheLayout
+      nowState={nowState}
+      warnState={warnState}
+      noiseState={noiseState}
+      noiseSet={noiseSet}
+      acHr={acHr}
+      acMn={acMn}
+    />
   );
 };
 

@@ -3,7 +3,7 @@ import { Root, Head } from 'react-static';
 
 import './app.css';
 
-import TheState from './components/theState';
+import TheFetch from './components/theFetch';
 
 export default function App() {
   return (
@@ -28,7 +28,7 @@ export default function App() {
 
         <link rel="mask-icon" href="/timer-circle.svg" color="white" />
       </Head>
-      <TheState />
+      <TheFetch />
     </Root>
   )
 }
